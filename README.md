@@ -1,6 +1,6 @@
 <h1>ExpNo 4 : Implement A* search algorithm for a Graph</h1> 
-<h3>Name:       </h3>
-<h3>Register Number:           </h3>
+<h3>Name: THEJASHREE S</h3>
+<h3>Register Number: 212224240175</h3>
 <H3>Aim:</H3>
 <p>To ImplementA * Search algorithm for a Graph using Python 3.</p>
 <H3>Algorithm:</H3>
@@ -49,7 +49,80 @@
     end (while loop)
 
 ``````
+## program
+```python
+from collections import defaultdict
 
+Graph_nodes = defaultdict(list)
+H_dist = {}
+
+# -------- Input --------
+edges, heuristics = map(int, input().split())
+
+# read edges
+for _ in range(edges):
+    parts = input().split()
+    u, v, w = parts[0], parts[1], parts[2]
+    Graph_nodes[u].append((v, int(w)))
+    Graph_nodes[v].append((u, int(w)))   # undirected
+
+# read heuristic values (SAFE)
+for _ in range(heuristics):
+    parts = input().split()
+    node = parts[0]
+    val = parts[-1]
+    H_dist[node] = int(val)
+
+# -------- Helpers --------
+def heuristic(n):
+    return H_dist[n]
+
+def get_neighbors(v):
+    return Graph_nodes[v]
+
+# -------- A* Algorithm --------
+def aStarAlgo(start_node, stop_node):
+    open_set = {start_node}
+    closed_set = set()
+
+    g = {start_node: 0}
+    parents = {start_node: start_node}
+
+    while open_set:
+        n = min(open_set, key=lambda x: g[x] + heuristic(x))
+
+        if n == stop_node:
+            path = []
+            while parents[n] != n:
+                path.append(n)
+                n = parents[n]
+            path.append(start_node)
+            path.reverse()
+            print("Path found:", path)
+            return path
+
+        for (m, weight) in get_neighbors(n):
+            if m not in open_set and m not in closed_set:
+                open_set.add(m)
+                parents[m] = n
+                g[m] = g[n] + weight
+            else:
+                if g[m] > g[n] + weight:
+                    g[m] = g[n] + weight
+                    parents[m] = n
+                    if m in closed_set:
+                        closed_set.remove(m)
+                        open_set.add(m)
+
+        open_set.remove(n)
+        closed_set.add(n)
+
+    print("Path does not exist!")
+    return None
+
+# -------- Run --------
+aStarAlgo('A', 'J')
+```
 <hr>
 <h2>Sample Graph I</h2>
 <hr>
@@ -89,7 +162,81 @@ J 0 <br>
 <hr>
 Path found: ['A', 'F', 'G', 'I', 'J']
 
+## program:
+```python
+from collections import defaultdict
 
+Graph_nodes = defaultdict(list)
+H_dist = {}
+
+# -------- Input --------
+edges, heuristics = map(int, input().split())
+
+# read edges
+for _ in range(edges):
+    parts = input().split()
+    u, v, w = parts[0], parts[1], parts[2]
+    Graph_nodes[u].append((v, int(w)))
+    Graph_nodes[v].append((u, int(w)))   # undirected
+
+# read heuristic values (SAFE)
+for _ in range(heuristics):
+    parts = input().split()
+    node = parts[0]
+    val = parts[-1]
+    H_dist[node] = int(val)
+
+# -------- Helpers --------
+def heuristic(n):
+    return H_dist[n]
+
+def get_neighbors(v):
+    return Graph_nodes[v]
+
+# -------- A* Algorithm --------
+def aStarAlgo(start_node, stop_node):
+    open_set = {start_node}
+    closed_set = set()
+
+    g = {start_node: 0}
+    parents = {start_node: start_node}
+
+    while open_set:
+        n = min(open_set, key=lambda x: g[x] + heuristic(x))
+
+        if n == stop_node:
+            path = []
+            while parents[n] != n:
+                path.append(n)
+                n = parents[n]
+            path.append(start_node)
+            path.reverse()
+            print("Path found:", path)
+            return path
+
+        for (m, weight) in get_neighbors(n):
+            if m not in open_set and m not in closed_set:
+                open_set.add(m)
+                parents[m] = n
+                g[m] = g[n] + weight
+            else:
+                if g[m] > g[n] + weight:
+                    g[m] = g[n] + weight
+                    parents[m] = n
+                    if m in closed_set:
+                        closed_set.remove(m)
+                        open_set.add(m)
+
+        open_set.remove(n)
+        closed_set.add(n)
+
+    print("Path does not exist!")
+    return None
+
+# -------- Run --------
+aStarAlgo('A', 'G')
+
+```
 <hr>
 <h2>Sample Graph II</h2>
 <hr>
@@ -98,22 +245,10 @@ Path found: ['A', 'F', 'G', 'I', 'J']
 
 
 <hr>
-<h2>Sample Input</h2>
-<hr>
-6 6 <br>
-A B 2 <br>
-B C 1 <br>
-A E 3 <br>
-B G 9 <br>
-E D 6 <br>
-D G 1 <br>
-A 11 <br>
-B 6 <br>
-C 99 <br>
-E 7 <br>
-D 1 <br>
-G 0 <br>
-<hr>
-<h2>Sample Output</h2>
-<hr>
-Path found: ['A', 'E', 'D', 'G']
+<h2>Input And output</h2>
+
+<img width="405" height="360" alt="image" src="https://github.com/user-attachments/assets/25498411-ccee-43c9-8aba-b354e9b45cd8" />
+
+
+## Result:
+

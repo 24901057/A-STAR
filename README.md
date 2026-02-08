@@ -251,4 +251,6 @@ aStarAlgo('A', 'G')
 
 
 ## Result:
+Implementing A * Search algorithm for a Graph using Python 3 is executed successfully.
+
 
